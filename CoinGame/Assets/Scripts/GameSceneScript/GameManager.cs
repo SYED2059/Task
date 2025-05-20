@@ -9,14 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public ObjectPool ObjectPool;
 
-    //[SerializeField] private TextMeshProUGUI scoreText;
-
-    //[SerializeField] public TextMeshProUGUI timerText;
 
     [SerializeField] private GameObject endGamePanel;
-
-    //[SerializeField] private TextMeshProUGUI finalScoreText;
-
 
     [SerializeField] private Button restartButton;
 
@@ -32,9 +26,17 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Data;
 
+    public AudioManager AudioManager;
+
     private void Awake()
     {
         Data = this;
+    }
+
+    void OnEnable()
+    {
+        restartButton.onClick.AddListener(RestartGame);
+        mainMenuButton.onClick.AddListener(BackToMenu);
     }
 
     void Start()
@@ -45,10 +47,6 @@ public class GameManager : MonoBehaviour
         UpdateTimerText();
 
         endGamePanel.SetActive(false);
-
-        restartButton.onClick.AddListener(RestartGame);
-        mainMenuButton.onClick.AddListener(BackToMenu);
-
         ObjectPool.OnCoinSpawned += SetupCoin;
 
         spawnRoutine = StartCoroutine(SpawnCoins());
@@ -84,17 +82,16 @@ public class GameManager : MonoBehaviour
     Vector2 GetRandomPosition()
     {
         Camera cam = Camera.main;
-
         Vector3 bottomLeft = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
         Vector3 topRight = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane));
 
-        float minX = bottomLeft.x + 0.5f; // padding
+        float minX = bottomLeft.x + 0.5f;
         float maxX = topRight.x - 0.5f;
         float minY = bottomLeft.y + 0.5f;
         float maxY = topRight.y - 0.5f;
 
         Vector2 spawnPos;
-        int maxAttempts = 20; // prevent infinite loop
+        int maxAttempts = 20;
 
         for (int i = 0; i < maxAttempts; i++)
         {
@@ -102,11 +99,10 @@ public class GameManager : MonoBehaviour
             float y = Random.Range(minY, maxY);
             spawnPos = new Vector2(x, y);
 
-            if (IsPositionFree(spawnPos, 1)) // 1.0f is minimum distance between coins
+            if (IsPositionFree(spawnPos, 1))
                 return spawnPos;
         }
 
-        // If no free spot found, just return a random pos anyway
         return new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
     }
 
@@ -138,21 +134,17 @@ public class GameManager : MonoBehaviour
 
     void UpdateScoreText()
     {
-        //scoreText.text = $"Score: {score}";
         UIManager.Data.UpdateScoreFN(score);
     }
 
     void UpdateTimerText()
     {
-        //timerText.text = $"Time: {Mathf.Ceil(timer)}";
         UIManager.Data.UpdateTimerFN(timer);
     }
 
     void EndGame()
     {
         StopCoroutine(spawnRoutine);
-
-        // Disable all coins
         foreach (Transform coin in ObjectPool.transform)
         {
             coin.gameObject.SetActive(false);
@@ -164,11 +156,31 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        AudioManager.PlayButtonClickSound();
+        StartCoroutine(ReloadSceneAsyncAfterDelay(0.2f));
+    }
+
+    IEnumerator ReloadSceneAsyncAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         SceneLoader.Data.ReloadSceneAsync();
     }
 
     public void BackToMenu()
     {
+        AudioManager.PlayButtonClickSound();
+        StartCoroutine(LoadSceneAsyncAfterDelay(0.2f));
+    }
+
+    IEnumerator LoadSceneAsyncAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         SceneLoader.Data.LoadSceneAsync("MainMenuScene");
+    }
+
+    void OnDisable()
+    {
+        restartButton.onClick.RemoveListener(RestartGame);
+        mainMenuButton.onClick.RemoveListener(BackToMenu);
     }
 }

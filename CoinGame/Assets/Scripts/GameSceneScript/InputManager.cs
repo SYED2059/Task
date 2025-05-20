@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour
                 DetectCoinTap(touch.position);
             }
         }
-        // For mouse input (desktop)
         else if (Input.GetMouseButtonDown(0))
         {
             DetectCoinTap(Input.mousePosition);

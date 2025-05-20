@@ -12,5 +12,7 @@ public class Coin : MonoBehaviour
         Debug.Log("CheckThisPlace");
         gameObject.SetActive(false);
         OnCollected?.Invoke();
+        AudioManager.Instance.PlayCoinCollectSound();
     }
+
 }

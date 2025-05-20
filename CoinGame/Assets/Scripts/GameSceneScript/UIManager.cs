@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    [SerializeField] public TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI timerText;
 
     public TextMeshProUGUI finalScoreText;
 

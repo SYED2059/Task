@@ -19,6 +19,8 @@ public class TMPPasswordToggle : MonoBehaviour
 
     [SerializeField] private Image toggleImage;
 
+    public AudioManager AudioManager;
+
     bool isPasswordHidden = true;
 
     void Awake()
@@ -38,6 +40,7 @@ public class TMPPasswordToggle : MonoBehaviour
 
     void TogglePasswordVisibility()
     {
+        AudioManager.PlayButtonClickSound();
         isPasswordHidden = !isPasswordHidden;
         SetPasswordMode(isPasswordHidden);
     }
@@ -51,7 +54,6 @@ public class TMPPasswordToggle : MonoBehaviour
 
     void OnDisable()
     {
-        toggleButton.onClick.AddListener(TogglePasswordVisibility);
-
+        toggleButton.onClick.RemoveListener(TogglePasswordVisibility);
     }
 }

@@ -8,18 +8,27 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    [SerializeField]private AudioSource musicSource;
+    [Header("AudioSource")]
+    [SerializeField] private AudioSource musicSource;
 
-    [SerializeField] private  AudioSource sfxSource;
+    [SerializeField] private AudioSource sfxSource;
+
+    [Header("AudioClip")]
+    [SerializeField] private AudioClip coinCollectClip;
+
+    [SerializeField] private AudioClip ButtonClickClip;
 
 
-    [SerializeField] private AudioClip mainMenuMusic;
+    [System.Serializable]
+    public class SceneMusic
+    {
+        public string sceneName;
+        public AudioClip musicClip;
+    }
 
-    [SerializeField] private AudioClip gameMusic;
+    public List<SceneMusic> sceneMusicList;
 
-    [SerializeField] private AudioClip buttonClickSound;
-
-    public Action OnPlayButtonClick;
+    private Dictionary<string, AudioClip> musicMap;
 
     private void Awake()
     {
@@ -34,54 +43,56 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
+        musicMap = new Dictionary<string, AudioClip>();
+
+        foreach (var item in sceneMusicList)
+        {
+            musicMap[item.sceneName] = item.musicClip;
+        }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        PlayMainMenuMusic();
-        OnPlayButtonClick += PlayButtonClick;
+        if (musicMap.TryGetValue(scene.name, out AudioClip clip))
+        {
+            PlayMusic(clip);
+        }
+        else
+        {
+            Debug.LogWarning("No music assigned for scene: " + scene.name);
+            musicSource.Stop();
+        }
+    }
+
+    private void PlayMusic(AudioClip clip)
+    {
+        if (musicSource.clip == clip)
+            return;
+
+        musicSource.clip = clip;
+        musicSource.Play();
+    }
+
+    public void PlayCoinCollectSound()
+    {
+        if (sfxSource != null && coinCollectClip != null)
+        {
+            sfxSource.PlayOneShot(coinCollectClip);
+        }
+    }
+
+    public void PlayButtonClickSound()
+    {
+        if (sfxSource != null && ButtonClickClip != null)
+        {
+            sfxSource.PlayOneShot(ButtonClickClip);
+        }
     }
 
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "MainMenuScene")
-        {
-            PlayMainMenuMusic();
-        }
-        else
-        {
-            PlayGameMusic();
-        }
-    }
-
-    public void PlayMainMenuMusic()
-    {
-        if (musicSource.clip != mainMenuMusic)
-        {
-            musicSource.clip = mainMenuMusic;
-            musicSource.loop = true;
-            musicSource.Play();
-        }
-    }
-
-    public void PlayGameMusic()
-    {
-        if (musicSource.clip != gameMusic)
-        {
-            musicSource.clip = gameMusic;
-            musicSource.loop = true;
-            musicSource.Play();
-        }
-    }
-
-    public void PlayButtonClick()
-    {
-        sfxSource.PlayOneShot(buttonClickSound);
     }
 }

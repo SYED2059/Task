@@ -18,6 +18,8 @@ public class LoginUIManager : MonoBehaviour
 
     public SceneLoader SceneLoader;
 
+    public AudioManager AudioManager;
+
     void Awake()
     {
         if (PlayerPrefs.HasKey("IsLoggedIn") && PlayerPrefs.GetInt("IsLoggedIn") == 1)
@@ -35,6 +37,7 @@ public class LoginUIManager : MonoBehaviour
 
     void OnLoginClicked()
     {
+        AudioManager.PlayButtonClickSound();
         string phone = phoneInput.text;
 
         if (phone.Length != 10 || !IsAllDigits(phone))
@@ -62,16 +65,8 @@ public class LoginUIManager : MonoBehaviour
 
     void LoadMainScene(string SceneName)
     {
-        //SceneManager.LoadScene("MainScene");
         Debug.Log("LoadScene");
         SceneLoader.LoadSceneAsync(SceneName);
-    }
-
-    void OnDisable()
-    {
-
-        loginButton.onClick.RemoveListener(OnLoginClicked);
-
     }
 
     bool IsAllDigits(string s)
@@ -82,5 +77,10 @@ public class LoginUIManager : MonoBehaviour
                 return false;
         }
         return true;
+    }
+
+    void OnDisable()
+    {
+        loginButton.onClick.RemoveListener(OnLoginClicked);
     }
 }

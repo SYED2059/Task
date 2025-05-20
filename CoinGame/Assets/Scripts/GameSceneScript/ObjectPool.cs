@@ -6,7 +6,8 @@ using UnityEngine.Events;
 public class ObjectPool : MonoBehaviour
 {
     [Header("Pool Settings")]
-    public GameObject coinPrefab;
+    [SerializeField] private GameObject coinPrefab;
+
     public int poolSize = 20;
 
     private List<GameObject> pool = new List<GameObject>();
@@ -30,8 +31,6 @@ public class ObjectPool : MonoBehaviour
             if (!coin.activeInHierarchy)
                 return coin;
         }
-
-        // Optionally expand pool if none available
         GameObject obj = Instantiate(coinPrefab, transform);
         obj.SetActive(false);
         pool.Add(obj);
@@ -43,7 +42,6 @@ public class ObjectPool : MonoBehaviour
         GameObject coin = GetCoin();
         coin.transform.position = position;
         coin.SetActive(true);
-
         OnCoinSpawned?.Invoke(coin);
     }
 }

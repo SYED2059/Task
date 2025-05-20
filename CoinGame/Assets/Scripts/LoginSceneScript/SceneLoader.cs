@@ -12,7 +12,7 @@ public class SceneLoader : MonoBehaviour
         if (Data == null)
         {
             Data = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -28,7 +28,6 @@ public class SceneLoader : MonoBehaviour
     private System.Collections.IEnumerator LoadSceneCoroutine(string sceneName)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
         while (!asyncLoad.isDone)
         {
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
@@ -50,7 +49,6 @@ public class SceneLoader : MonoBehaviour
 
         while (!asyncLoad.isDone)
         {
-            // Optional: Debug or show loading progress
             Debug.Log("Loading Progress: " + asyncLoad.progress);
             yield return null;
         }
