@@ -6,31 +6,15 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField]
-    private Button playGameButton;
 
-    [SerializeField]
-    private Button exitGameButton;
+    [SerializeField] private Button playGameButton;
 
-    void Awake()
-    {
-
-    }
+    [SerializeField] private Button exitGameButton;
 
     void OnEnable()
     {
         playGameButton.onClick.AddListener(GameSceneLoadFN);
         exitGameButton.onClick.AddListener(ExitGameFN);
-
-    }
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
     }
 
     void OnDisable()
@@ -41,7 +25,7 @@ public class MainMenuController : MonoBehaviour
 
     void GameSceneLoadFN()
     {
-        SceneLoader.data.LoadSceneAsync("GameScene");
+        SceneLoader.Data.LoadSceneAsync("GameScene");
     }
 
     void ExitGameFN()

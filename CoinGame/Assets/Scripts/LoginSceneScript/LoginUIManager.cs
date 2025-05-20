@@ -6,18 +6,15 @@ using UnityEngine.UI;
 
 public class LoginUIManager : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_InputField phoneInput;
 
-    [SerializeField]
-    private TMP_InputField passwordInput;
+    [SerializeField] private TMP_InputField phoneInput;
+
+    [SerializeField] private TMP_InputField passwordInput;
 
 
-    [SerializeField]
-    private TextMeshProUGUI statusText;
+    [SerializeField] private TextMeshProUGUI statusText;
 
-    [SerializeField]
-    private Button loginButton;
+    [SerializeField] private Button loginButton;
 
     public SceneLoader SceneLoader;
 

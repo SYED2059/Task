@@ -6,22 +6,18 @@ using TMPro;
 
 public class TMPPasswordToggle : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_InputField passwordField;
 
-    [SerializeField]
-    private Button toggleButton;
+    [SerializeField] private TMP_InputField passwordField;
 
-
-    [SerializeField]
-    private Sprite eyeOpen;
-
-    [SerializeField]
-    private Sprite eyeClose;
+    [SerializeField] private Button toggleButton;
 
 
-    [SerializeField]
-    private Image toggleImage;
+    [SerializeField] private Sprite eyeOpen;
+
+    [SerializeField] private Sprite eyeClose;
+
+
+    [SerializeField] private Image toggleImage;
 
     bool isPasswordHidden = true;
 

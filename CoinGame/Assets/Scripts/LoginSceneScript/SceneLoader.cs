@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static SceneLoader data;
+    public static SceneLoader Data;
 
     void Awake()
     {
-        if (data == null)
+        if (Data == null)
         {
-            data = this;
+            Data = this;
             DontDestroyOnLoad(gameObject); 
         }
         else
@@ -34,6 +34,24 @@ public class SceneLoader : MonoBehaviour
             float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
             Debug.Log("Loading progress: " + (progress * 100) + "%");
 
+            yield return null;
+        }
+    }
+
+    public void ReloadSceneAsync()
+    {
+        StartCoroutine(ReloadSceneCoroutine());
+    }
+
+    IEnumerator ReloadSceneCoroutine()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        asyncLoad.allowSceneActivation = true;
+
+        while (!asyncLoad.isDone)
+        {
+            // Optional: Debug or show loading progress
+            Debug.Log("Loading Progress: " + asyncLoad.progress);
             yield return null;
         }
     }
