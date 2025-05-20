@@ -26,13 +26,12 @@ public class InputManager : MonoBehaviour
         Vector2 worldPoint = Camera.main.ScreenToWorldPoint(screenPosition);
 
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-
         if (hit.collider != null)
         {
             Coin coin = hit.collider.GetComponent<Coin>();
             if (coin != null && coin.gameObject.activeInHierarchy)
             {
-                Debug.Log("COIN");
+                Debug.Log("TouchCoin");
                 coin.Collect();
             }
         }

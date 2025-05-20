@@ -7,18 +7,21 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("ObjectPool")]
     public ObjectPool ObjectPool;
 
-
+    [Header("GameObject")]
     [SerializeField] private GameObject endGamePanel;
 
+    [Header("Button")]
     [SerializeField] private Button restartButton;
 
     [SerializeField] private Button mainMenuButton;
 
+    [Header("int")]
     [SerializeField] private int score = 0;
 
-
+    [Header("float")]
     [SerializeField] private float gameDuration = 30f;
     [SerializeField] private float timer;
 
@@ -26,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Data;
 
+    [Header("AudioManager")]
     public AudioManager AudioManager;
 
     private void Awake()

@@ -6,14 +6,15 @@ using UnityEngine.UI;
 
 public class LoginUIManager : MonoBehaviour
 {
-
+    [Header("TMP_InputField")]
     [SerializeField] private TMP_InputField phoneInput;
 
     [SerializeField] private TMP_InputField passwordInput;
 
-
+    [Header("TextMeshProUGUI")]
     [SerializeField] private TextMeshProUGUI statusText;
 
+    [Header("Button")]
     [SerializeField] private Button loginButton;
 
     public SceneLoader SceneLoader;
@@ -33,7 +34,6 @@ public class LoginUIManager : MonoBehaviour
     {
         loginButton.onClick.AddListener(OnLoginClicked);
     }
-
 
     void OnLoginClicked()
     {
@@ -59,8 +59,6 @@ public class LoginUIManager : MonoBehaviour
         {
             statusText.text = "Fill the information";
         }
-
-
     }
 
     void LoadMainScene(string SceneName)

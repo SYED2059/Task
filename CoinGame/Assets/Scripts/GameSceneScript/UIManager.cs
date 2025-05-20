@@ -6,12 +6,14 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("TextMeshProUGUI")]
     [SerializeField] private TextMeshProUGUI scoreText;
 
     [SerializeField] private TextMeshProUGUI timerText;
 
     public TextMeshProUGUI finalScoreText;
 
+    [Header("GameObject")]
     [SerializeField] private GameObject gameOverPanel;
 
     public static UIManager Data;

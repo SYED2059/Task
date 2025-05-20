@@ -6,11 +6,12 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-
+    [Header("Button")]
     [SerializeField] private Button playGameButton;
 
     [SerializeField] private Button exitGameButton;
 
+    [Header("AudioManager")]
     public AudioManager AudioManager;
 
     void OnEnable()

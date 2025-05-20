@@ -6,19 +6,21 @@ using TMPro;
 
 public class TMPPasswordToggle : MonoBehaviour
 {
-
+    [Header("TMP_InputField")]
     [SerializeField] private TMP_InputField passwordField;
 
+    [Header("Button")]
     [SerializeField] private Button toggleButton;
 
-
+    [Header("Sprite")]
     [SerializeField] private Sprite eyeOpen;
 
     [SerializeField] private Sprite eyeClose;
 
-
+    [Header("Image")]
     [SerializeField] private Image toggleImage;
 
+    [Header("AudioManager")]
     public AudioManager AudioManager;
 
     bool isPasswordHidden = true;
