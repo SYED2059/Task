@@ -24,12 +24,16 @@ public class MainMenuController : MonoBehaviour
     {
         AudioManager.PlayButtonClickSound();
         StartCoroutine(LoadSceneAfterDelay(0.2f));
+
     }
 
     IEnumerator LoadSceneAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneLoader.Data.LoadSceneAsync("GameScene");
+        LoadingScreen.Instance.Show(() =>
+        {
+            SceneLoader.Data.LoadSceneAsync("GameScene");
+        });
     }
 
     void ExitGameFN()

@@ -71,14 +71,21 @@ public class LoginUIManager : MonoBehaviour
 
     void FirstLoginFN()
     {
-        MainScreenPanel.SetActive(false);
-        LoginScreenPanel.SetActive(true);
+        LoadingScreen.Instance.Show(() =>
+        {
+            MainScreenPanel.SetActive(false);
+            LoginScreenPanel.SetActive(true);
+        });
+       
     }
 
     void LoadMainScene(string SceneName)
     {
         Debug.Log("LoadScene");
-        SceneLoader.LoadSceneAsync(SceneName);
+        LoadingScreen.Instance.Show(() =>
+        {
+            SceneLoader.LoadSceneAsync(SceneName);
+        });
     }
 
     bool IsAllDigits(string s)

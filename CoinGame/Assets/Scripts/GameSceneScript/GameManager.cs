@@ -177,7 +177,10 @@ public class GameManager : MonoBehaviour
     IEnumerator ReloadSceneAsyncAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneLoader.Data.ReloadSceneAsync();
+        LoadingScreen.Instance.Show(() =>
+        {
+            SceneLoader.Data.ReloadSceneAsync();
+        });
     }
 
     public void BackToMenu()
