@@ -17,6 +17,13 @@ public class LoginUIManager : MonoBehaviour
     [Header("Button")]
     [SerializeField] private Button loginButton;
 
+    [SerializeField] private Button FirstloginButton;
+
+    [Header("GameObject")]
+    [SerializeField] private GameObject MainScreenPanel;
+
+    [SerializeField] private GameObject LoginScreenPanel;
+
     public SceneLoader SceneLoader;
 
     public AudioManager AudioManager;
@@ -33,6 +40,7 @@ public class LoginUIManager : MonoBehaviour
     void OnEnable()
     {
         loginButton.onClick.AddListener(OnLoginClicked);
+        FirstloginButton.onClick.AddListener(FirstLoginFN);
     }
 
     void OnLoginClicked()
@@ -61,6 +69,12 @@ public class LoginUIManager : MonoBehaviour
         }
     }
 
+    void FirstLoginFN()
+    {
+        MainScreenPanel.SetActive(false);
+        LoginScreenPanel.SetActive(true);
+    }
+
     void LoadMainScene(string SceneName)
     {
         Debug.Log("LoadScene");
@@ -80,5 +94,6 @@ public class LoginUIManager : MonoBehaviour
     void OnDisable()
     {
         loginButton.onClick.RemoveListener(OnLoginClicked);
+        FirstloginButton.onClick.RemoveListener(FirstLoginFN);
     }
 }

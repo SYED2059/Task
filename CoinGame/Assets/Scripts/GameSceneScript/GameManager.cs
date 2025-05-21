@@ -71,15 +71,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnCoins()
+    public IEnumerator SpawnCoins()
     {
         while (true)
         {
-            float waitTime = Random.Range(0.5f, 1f);
-            yield return new WaitForSeconds(waitTime);
+            if (!PauseManager.isPaused)
+            {
+                float waitTime = Random.Range(0.5f, 1f);
+                yield return new WaitForSeconds(waitTime);
 
-            Vector2 spawnPos = GetRandomPosition();
-            ObjectPool.SpawnCoin(spawnPos);
+                Vector2 spawnPos = GetRandomPosition();
+                ObjectPool.SpawnCoin(spawnPos);
+            }
+            else
+            {
+                yield return null;
+            }
         }
     }
 
@@ -128,8 +135,11 @@ public class GameManager : MonoBehaviour
     {
         while (timer > 0)
         {
-            timer -= Time.deltaTime;
-            UpdateTimerText();
+            if (!PauseManager.isPaused)
+            {
+                timer -= Time.deltaTime;
+                UpdateTimerText();
+            }
             yield return null;
         }
 
